@@ -1,74 +1,83 @@
 "use client";
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { Product } from '../../types/product';
+
+import React, { useState } from "react";
+import Image from "next/image";
+import { Product } from "../../types/product";
+import { ShoppingCart, Plus, Minus } from "lucide-react";
 
 interface HamburguerCardProps {
   product: Product;
+  onAddToCart?: (product: Product, quantity: number) => void;
 }
 
-export const HamburguerCard: React.FC<HamburguerCardProps> = ({ product }) => {
+export const HamburguerCard: React.FC<HamburguerCardProps> = ({ product, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
 
-  const increaseQuantity = () => {
-    setQuantity(prev => prev + 1);
-  };
+  const increaseQuantity = () => setQuantity(prev => prev + 1);
+  const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : prev));
 
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(prev => prev - 1);
+  const handleAddToCart = () => {
+    if (onAddToCart) {
+      onAddToCart(product, quantity);
     }
   };
 
   return (
-    <div className="bg-white rounded-lg p-5 flex flex-col">
+    <div className="bg-[#FFF7E0] rounded-2xl p-6 flex flex-col shadow-md hover:shadow-xl transition-all transform hover:scale-105">
+      
       {product.tag && (
-        <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded self-start mb-2">
+        <span className="bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full self-start mb-3">
           {product.tag}
         </span>
       )}
       
-      <div className="relative w-full h-40 mb-4">
+      <div className="relative w-full h-48 mb-4 flex justify-center items-center">
         <Image 
-          src={product.image || '/placeholder-burger.png'} 
-          alt={product.name} 
-          fill
+          src={product.image}
+          alt={product.name}
+          width={250}
+          height={250}
           className="object-contain"
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
         />
       </div>
-      
-      <h3 className="font-bold text-lg text-gray-900 mb-2">{product.name}</h3>
-      
+
+      <h3 className="font-bold text-xl text-gray-900 mb-2 text-center">{product.name}</h3>
+
       {product.description && (
-        <p className="text-gray-600 text-sm mb-4 flex-grow">{product.description}</p>
+        <p className="text-gray-600 text-sm mb-4 text-center">{product.description}</p>
       )}
-      
-      <div className="flex items-center justify-between mt-2">
-        <span className="text-gray-900 font-bold">
-          R$ {product.price.toFixed(2).replace('.', ',')}
+
+      <div className="flex items-center justify-between mt-auto">
+        <span className="text-gray-900 font-bold text-lg">
+          R$ {product.price.toFixed(2).replace(".", ",")}
         </span>
-        
-        <div className="flex items-center">
-          <div className="flex items-center border rounded-md mr-2">
+
+        <div className="flex flex-col items-center">
+          <div className="flex items-center bg-white rounded-full overflow-hidden shadow-sm mb-2">
             <button 
               onClick={decreaseQuantity}
-              className="px-2 py-1 text-gray-600 hover:text-gray-800"
+              className="px-3 py-1 text-purple-800 hover:text-purple-900 disabled:opacity-50"
+              disabled={quantity === 1}
             >
-              -
+              <Minus className="w-4 h-4" />
             </button>
-            <span className="px-2">{quantity}</span>
+            <span className="px-4 text-gray-800 font-semibold">{quantity}</span>
             <button 
               onClick={increaseQuantity}
-              className="px-2 py-1 text-gray-600 hover:text-gray-800"
+              className="px-3 py-1 text-purple-800 hover:text-purple-900"
             >
-              +
+              <Plus className="w-4 h-4" />
             </button>
           </div>
-          
-          <button className="bg-purple-900 hover:bg-purple-800 text-white p-2 rounded-md">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
+
+          <button 
+            onClick={handleAddToCart}
+            className="flex items-center gap-2 bg-purple-800 hover:bg-purple-700 text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            Adicionar
           </button>
         </div>
       </div>

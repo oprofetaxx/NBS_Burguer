@@ -9,8 +9,8 @@ export const Footer: React.FC = () => {
           <div className="flex items-center mb-4 md:mb-0">
             <div className="w-8 h-8 relative mr-2">
               <Image 
-                src="/logo.png" 
-                alt="Coffee Delivery" 
+                src="/logo_2.png" 
+                alt="Nebs Burguer" 
                 width={32}
                 height={32}
                 className="object-contain"

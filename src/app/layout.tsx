@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CartProvider } from './contexts/CartContext'; // <- Importa certinho
 
 export const metadata: Metadata = {
-  title: "Coffee Delivery | O Melhor Hamburguer da Cidade",
-  description: "Delivery de café e hambúrgueres premium",
+  title: "O Melhor Hambúrguer da Cidade",
+  description: "Delivery de hambúrgueres premium",
 };
 
 export default function RootLayout({
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="min-h-screen bg-gray-50">
-        {children}
+        <CartProvider> {/* <- Envolve o app inteiro */}
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

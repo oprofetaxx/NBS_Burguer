@@ -5,41 +5,45 @@ import { Product } from '../../types/product';
 interface ProductSectionProps {
   title: string;
   category: string;
+  onAddToCart?: (product: Product, quantity: number) => void;
 }
 
-export const ProductSection: React.FC<ProductSectionProps> = ({ title, category }) => {
-  // Normalmente você buscaria esses dados de uma API
+export const ProductSection: React.FC<ProductSectionProps> = ({ 
+  title, 
+  category,
+  onAddToCart 
+}) => {
   const products: Product[] = category === 'tradicional' ? [
     {
       id: '1',
-      name: 'Tradicional',
-      description: 'Hambúrguer tradicional com queijo, alface e tomate',
+      name: 'CLASSICOS',
+      description: 'Pão brioche, duplo cheddar, hamburguer 120g, salada, molho',
       price: 20.90,
-      image: '/burger-tradicional.png',
+      image: '/images/burg_classico.png',
       category: 'tradicional'
     },
     {
       id: '2',
-      name: 'Tradicional',
-      description: 'Hambúrguer tradicional com queijo, alface e tomate',
+      name: 'Chicken cheese',
+      description: 'Pão brioche, duplo cheddar, file frango empanado, salada, maionese tomate.',
       price: 20.90,
-      image: '/burger-tradicional.png',
+      image: '/images/chicken_cheese.png',
       category: 'tradicional'
     },
     {
       id: '3',
-      name: 'Tradicional',
-      description: 'Hambúrguer tradicional com queijo, alface e tomate',
+      name: 'Especial bacon',
+      description: 'Pão brioche, duplo cheddar, hamburguer 120g, bacon, maionese bacon ',
       price: 20.90,
-      image: '/burger-tradicional.png',
+      image: '/images/especial_bacon.png', 
       category: 'tradicional'
     },
     {
       id: '4',
-      name: 'Tradicional',
-      description: 'Hambúrguer tradicional com queijo, alface e tomate',
+      name: 'Especial salada',
+      description: 'Pão brioche, salada 2x, hamburguer, duplo cheddar, maionese tomate.',
       price: 20.90,
-      image: '/burger-tradicional.png',
+      image: '/images/especial_salada.png',
       category: 'tradicional'
     }
   ] : [
@@ -48,7 +52,7 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ title, category 
       name: 'TOURO ESTELAR',
       description: 'Pão brioche, Maionese de bacon, Picles, Cheddar 2x, Hamburguer 120g 2x, Bacon, Cebola Caramelizada.',
       price: 29.90,
-      image: '/touro-estelar.png',
+      image: '/images/touro_estelar.png',
       category: 'especial',
       tag: 'ESPECIAL'
     },
@@ -57,7 +61,7 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ title, category 
       name: 'COSMO BACON X2',
       description: 'Pão brioche, Maionese bacon, Hambúrguer 120g 2x, Bacon 2x, Cheddar 2x',
       price: 32.90,
-      image: '/cosmo-bacon.png',
+      image: '/images/cosmo_baconx2.png',
       category: 'especial',
       tag: 'ESPECIAL'
     },
@@ -66,7 +70,7 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ title, category 
       name: 'ASTRO NEBULITOS',
       description: 'Pão brioche, Maionese bacon, Doritos 2x, Hamburguer 120g 2x, Bacon, Cheddar 2x',
       price: 31.90,
-      image: '/astro-nebulitos.png',
+      image: '/images/astro_nebulitos.png',
       category: 'especial',
       tag: 'ESPECIAL'
     },
@@ -75,7 +79,7 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ title, category 
       name: 'ORBITA VERDE',
       description: 'Pão brioche, Maionese verde especial, Picles, Tomate cereja, Hamburguer 120g 2x, Cheddar 2x',
       price: 27.90,
-      image: '/orbita-verde.png',
+      image: '/images/orbita_verde.png',
       category: 'especial',
       tag: 'ESPECIAL'
     },
@@ -84,7 +88,7 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ title, category 
       name: 'PORCUS PRIME',
       description: 'Calabresa, Lombo, Hamburguer suíno 2x, Bacon, Mussarela 2x',
       price: 35.90,
-      image: '/porcus-prime.png',
+      image: '/images/porcus_prime.png',
       category: 'especial',
       tag: 'ESPECIAL'
     },
@@ -93,7 +97,7 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ title, category 
       name: 'COSTELA ESPACIAL',
       description: 'Pão brioche, Hambúrguer de costela 120g 2x, Cheddar 2x, Costela desfiada, Salada, Maionese costela',
       price: 34.90,
-      image: '/costela-espacial.png',
+      image: '/images/costela_espacial.png',
       category: 'especial',
       tag: 'ESPECIAL'
     },
@@ -102,7 +106,7 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ title, category 
       name: 'GALACTUS',
       description: 'Pão brioche, Triple hamburguer 3x 200g, triple cheddar, triple bacon, maionese costela',
       price: 49.90,
-      image: '/galactus.png',
+      image: '/images/galactus.png',
       category: 'especial',
       tag: 'SUPREMOS'
     },
@@ -111,7 +115,7 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ title, category 
       name: 'DORMAMMU',
       description: 'Pão brioche, maionese costela, mignon fatiado empanado 2x, hamburguer 200g, bacon, maionese tomate, cebola roxa, cheddar, bomba de mussarela',
       price: 49.90,
-      image: '/public/DORMAMU.png',
+      image: '/images/dormammu.png', 
       category: 'especial',
       tag: 'SUPREMOS'
     }
@@ -123,7 +127,11 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ title, category 
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map(product => (
-          <HamburguerCard key={product.id} product={product} />
+          <HamburguerCard 
+            key={product.id} 
+            product={product} 
+            onAddToCart={onAddToCart}
+          />
         ))}
       </div>
     </section>
