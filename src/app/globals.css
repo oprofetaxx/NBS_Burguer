@@ -72,6 +72,23 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+
+  a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+  }
+  a:hover {
+    color: #ff5722; /* cor laranja no hover */
+  }
+  
 }
 
 
+/*CORE:
+
+LARANJA - #F54601
+OFF-WHITE - #FCE8C7
+AMARELO - #F7AC02
+MARROM - #460800
+*/

@@ -1,88 +1,73 @@
-"use client";
+import { ShoppingCart, Minus, Plus } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
+import { Product } from '../types';
 
-import React, { useState } from "react";
-import Image from "next/image";
-import { Product } from "../../types/product";
-import { ShoppingCart, Plus, Minus } from "lucide-react";
-
-interface HamburguerCardProps {
+interface Props {
   product: Product;
-  onAddToCart?: (product: Product, quantity: number) => void;
+  onAddToCart: (product: Product, quantity: number) => void;
 }
 
-export const HamburguerCard: React.FC<HamburguerCardProps> = ({ product, onAddToCart }) => {
+export default function HamburguerCard({ product, onAddToCart }: Props) {
   const [quantity, setQuantity] = useState(1);
 
-  const increaseQuantity = () => setQuantity(prev => prev + 1);
-  const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : prev));
+  const increase = () => setQuantity(q => q + 1);
+  const decrease = () => setQuantity(q => (q > 1 ? q - 1 : 1));
 
   const handleAddToCart = () => {
-    if (onAddToCart) {
-      onAddToCart(product, quantity);
-    }
+    onAddToCart(product, quantity);
+    setQuantity(1);
   };
 
   return (
-    <div className="bg-[#FFF7E0] rounded-2xl p-6 flex flex-col shadow-md hover:shadow-xl transition-all transform hover:scale-105">
-      
-      {product.tag && (
-        <span className="bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full self-start mb-3">
-          {product.tag}
-        </span>
-      )}
-      
-      <div className="relative w-full h-48 mb-4 flex justify-center items-center">
-        <Image 
+    <div className="bg-white rounded-2xl shadow-lg p-4 flex flex-row items-center gap-6 text-left">
+      {/* Imagem do hambúrguer (esquerda com espaço) */}
+      <div className="w-36 h-36 flex-shrink-0 ml-2">
+        <Image
           src={product.image}
           alt={product.name}
-          width={250}
-          height={250}
-          className="object-contain"
-          priority
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
+          width={144}
+          height={144}
+          className="object-contain w-full h-full"
         />
       </div>
 
-      <h3 className="font-bold text-xl text-gray-900 mb-2 text-center">{product.name}</h3>
+      {/* Conteúdo à direita mais centralizado */}
+      <div className="flex-1 flex flex-col justify-center items-start gap-2 px-2">
+        {/* Badge de categoria */}
+        {product.tag && (
+          <span className="text-xs px-3 py-1 bg-yellow-500 text-white rounded-full uppercase font-semibold">
+            {product.tag}
+          </span>
+        )}
 
-      {product.description && (
-        <p className="text-gray-600 text-sm mb-4 text-center">{product.description}</p>
-      )}
+        <h3 className="text-lg font-semibold">{product.name}</h3>
+        <p className="text-sm text-gray-600">{product.description}</p>
+        <p className="text-lg font-bold mt-1">R$ {product.price.toFixed(2)}</p>
 
-      <div className="flex items-center justify-between mt-auto">
-        <span className="text-gray-900 font-bold text-lg">
-          R$ {product.price.toFixed(2).replace(".", ",")}
-        </span>
-
-        <div className="flex flex-col items-center">
-          <div className="flex items-center bg-white rounded-full overflow-hidden shadow-sm mb-2">
-            <button 
-              onClick={decreaseQuantity}
-              className="px-3 py-1 text-purple-800 hover:text-purple-900 disabled:opacity-50"
-              disabled={quantity === 1}
-            >
-              <Minus className="w-4 h-4" />
-            </button>
-            <span className="px-4 text-gray-800 font-semibold">{quantity}</span>
-            <button 
-              onClick={increaseQuantity}
-              className="px-3 py-1 text-purple-800 hover:text-purple-900"
-            >
-              <Plus className="w-4 h-4" />
-            </button>
-          </div>
-
-          <button 
-            onClick={handleAddToCart}
-            className="flex items-center gap-2 bg-purple-800 hover:bg-purple-700 text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors"
+        {/* Controles de quantidade e botão */}
+        <div className="flex items-center gap-2 mt-2 flex-wrap">
+          <button
+            onClick={decrease}
+            className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full"
           >
-            <ShoppingCart className="h-5 w-5" />
-            Adicionar
+            <Minus size={16} />
+          </button>
+          <span className="text-lg font-semibold">{quantity}</span>
+          <button
+            onClick={increase}
+            className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full"
+          >
+            <Plus size={16} />
+          </button>
+          <button
+            onClick={handleAddToCart}
+            className="ml-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl transition flex items-center gap-2"
+          >
+            <ShoppingCart size={16} /> Adicionar
           </button>
         </div>
       </div>
     </div>
   );
-};
-
-export default HamburguerCard;
+}

@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import ProductSection from './components/ProductSection';
 import Footer from './components/Footer';
+import CategoryTabs from './components/CategoryTabs';
 import { Product } from './types/product';
 
 interface CartItem {
@@ -12,48 +13,102 @@ interface CartItem {
   quantity: number;
 }
 
+const categoryMap: Record<string, string> = {
+  "Hambúrgueres": "tradicional",
+  "Bebidas": "bebidas",
+  "Porções": "porcoes",
+  "Massas": "massas",
+  "Sobremesas": "sobremesas",
+};
+
 export default function Home() {
+  const categories = ['Hambúrgueres', 'Bebidas', 'Porções', 'Massas', 'Sobremesas'];
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [cart, setCart] = useState<CartItem[]>([]);
-  
+
   const handleAddToCart = (product: Product, quantity: number) => {
     setCart(prevCart => {
-      // Verificar se o produto já está no carrinho
       const existingItemIndex = prevCart.findIndex(item => item.product.id === product.id);
       
       if (existingItemIndex >= 0) {
-        // Se o produto já existe, atualize a quantidade
         const updatedCart = [...prevCart];
         updatedCart[existingItemIndex].quantity += quantity;
         return updatedCart;
       } else {
-        // Se não existe, adicione ao carrinho
         return [...prevCart, { product, quantity }];
       }
     });
-    
-    // Você pode adicionar uma notificação ou toast aqui para confirmar
+
     alert(`${quantity} ${product.name} adicionado ao carrinho!`);
   };
 
   return (
-    <>
+    <div className="min-h-screen">
       <Header cartItemCount={cart.reduce((total, item) => total + item.quantity, 0)} />
       
-      <main className="container mx-auto px-4 py-6">
+      <main className="max-w-5xl mx-auto px-4 pt-44 pb-10">
         <HeroSection />
-        <ProductSection 
-          title="Nossos Hamburgueres" 
-          category="tradicional"
-          onAddToCart={handleAddToCart} 
+
+        <CategoryTabs
+          activeTab={selectedCategory}
+          onChange={(category) => setSelectedCategory(category)}
         />
-        <ProductSection 
-          title="Hamburgueres Especiais" 
-          category="especial"
-          onAddToCart={handleAddToCart} 
-        />
+
+        {/* Renderizar produtos de acordo com a categoria selecionada */}
+        {selectedCategory === 'Hambúrgueres' && (
+          <>
+            <ProductSection 
+              title="Hambúrgueres Tradicionais" 
+              category="tradicional"
+              onAddToCart={handleAddToCart} 
+            />
+            <ProductSection 
+              title="Hambúrgueres Especiais" 
+              category="especial"
+              onAddToCart={handleAddToCart} 
+            />
+            <ProductSection 
+              title="Hambúrgueres Supremos" 
+              category="supremos"
+              onAddToCart={handleAddToCart} 
+            />
+          </>
+        )}
+
+        {selectedCategory === 'Bebidas' && (
+          <ProductSection 
+            title="Bebidas Geladas" 
+            category="bebidas"
+            onAddToCart={handleAddToCart} 
+          />
+        )}
+
+        {selectedCategory === 'Porções' && (
+          <ProductSection 
+            title="Porções Deliciosas" 
+            category="porcoes"
+            onAddToCart={handleAddToCart} 
+          />
+        )}
+
+        {selectedCategory === 'Massas' && (
+          <ProductSection 
+            title="Massas Artesanais" 
+            category="massas"
+            onAddToCart={handleAddToCart} 
+          />
+        )}
+
+        {selectedCategory === 'Sobremesas' && (
+          <ProductSection 
+            title="Sobremesas Irresistíveis" 
+            category="sobremesas"
+            onAddToCart={handleAddToCart} 
+          />
+        )}
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }
