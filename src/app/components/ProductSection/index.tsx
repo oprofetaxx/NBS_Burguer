@@ -1,139 +1,48 @@
-import React from 'react';
-import HamburguerCard from '../HamburguerCard';
+import React, { useEffect, useState } from 'react';
 import { Product } from '../../types/product';
+import HamburguerCard from '../HamburguerCard';
 
 interface ProductSectionProps {
   title: string;
   category: string;
-  onAddToCart?: (product: Product, quantity: number) => void;
+  onAddToCart: (product: Product) => void;  // Função para adicionar ao carrinho
 }
 
-const ProductSection: React.FC<ProductSectionProps> = ({
-  title,
-  category,
-  onAddToCart
-}) => {
-  let products: Product[] = [];
+const ProductSection: React.FC<ProductSectionProps> = ({ title, category, onAddToCart }) => {
+  const [products, setProducts] = useState<Product[]>([]);
 
-  ///linhas pag - definição dos produtos por categoria
-  if (category === 'tradicional') {
-    products = [
-      {
-        id: '1',
-        name: 'Burg Clássico',
-        description: 'Pão brioche, duplo cheddar, hamburguer 120g, salada, molho',
-        price: 20.9,
-        image: '/images/clas1.png',
-        category: 'tradicional',
-        tag: 'TRADICIONAL'
-      },
-      {
-        id: '2',
-        name: 'Chicken cheese',
-        description: 'Pão brioche, duplo cheddar, filé de frango empanado, salada, maionese tomate.',
-        price: 20.9,
-        image: '/images/chicken2.png',
-        category: 'tradicional',
-        tag: 'TRADICIONAL'
-      },
-      {
-        id: '3',
-        name: 'Especial bacon',
-        description: 'Pão brioche, duplo cheddar, hamburguer 120g, bacon, maionese bacon',
-        price: 20.9,
-        image: '/images/especial_bacon2.png',
-        category: 'tradicional',
-        tag: 'TRADICIONAL'
-      },
-      {
-        id: '4',
-        name: 'Especial salada',
-        description: 'Pão brioche, salada 2x, hamburguer, duplo cheddar, maionese tomate.',
-        price: 20.9,
-        image: '/images/especial_salada2.png',
-        category: 'tradicional',
-        tag: 'TRADICIONAL'
-      }
-    ];
-  } else if (category === 'especial') {
-    products = [
-      {
-        id: '5',
-        name: 'TOURO ESTELAR',
-        description: 'Pão brioche, maionese de bacon, picles, cheddar 2x, hamburguer 120g 2x, bacon, cebola caramelizada.',
-        price: 29.9,
-        image: '/images/touro_estelar.png',
-        category: 'especial',
-        tag: 'ESPECIAL'
-      },
-      {
-        id: '6',
-        name: 'COSMO BACON X2',
-        description: 'Pão brioche, maionese bacon, hamburguer 120g 2x, bacon 2x, cheddar 2x',
-        price: 32.9,
-        image: '/images/cosmo_baconx2.png',
-        category: 'especial',
-        tag: 'ESPECIAL'
-      },
-      {
-        id: '7',
-        name: 'ASTRO NEBULITOS',
-        description: 'Pão brioche, maionese bacon, doritos 2x, hamburguer 120g 2x, bacon, cheddar 2x',
-        price: 31.9,
-        image: '/images/astro_nebulitos.png',
-        category: 'especial',
-        tag: 'ESPECIAL'
-      },
-      {
-        id: '8',
-        name: 'ORBITA VERDE',
-        description: 'Pão brioche, maionese verde especial, picles, tomate cereja, hamburguer 120g 2x, cheddar 2x',
-        price: 27.9,
-        image: '/images/orbita_verde.png',
-        category: 'especial',
-        tag: 'ESPECIAL'
-      },
-      {
-        id: '9',
-        name: 'PORCUS PRIME',
-        description: 'Calabresa, lombo, hamburguer suíno 2x, bacon, mussarela 2x',
-        price: 35.9,
-        image: '/images/porcus_prime.png',
-        category: 'especial',
-        tag: 'ESPECIAL'
-      },
-      {
-        id: '10',
-        name: 'COSTELA ESPACIAL',
-        description: 'Pão brioche, hamburguer de costela 120g 2x, cheddar 2x, costela desfiada, salada, maionese costela',
-        price: 34.9,
-        image: '/images/costela_espacial.png',
-        category: 'especial',
-        tag: 'ESPECIAL'
-      }
-    ];
-  } else if (category === 'supremos') {
-    products = [
-      {
-        id: '11',
-        name: 'GALACTUS',
-        description: 'Pão brioche, triple hamburguer 3x 200g, triple cheddar, triple bacon, maionese costela',
-        price: 49.9,
-        image: '/images/galactus.png',
-        category: 'supremos',
-        tag: 'SUPREMOS'
-      },
-      {
-        id: '12',
-        name: 'DORMAMMU',
-        description: 'Pão brioche, maionese costela, mignon fatiado empanado 2x, hamburguer 200g, bacon, maionese tomate, cebola roxa, cheddar, bomba de mussarela',
-        price: 49.9,
-        image: '/images/dormammu.png',
-        category: 'supremos',
-        tag: 'SUPREMOS'
-      }
-    ];
-  }
+  useEffect(() => {
+    let products: Product[] = [];
+
+    // Ajuste os produtos de acordo com a categoria selecionada
+    if (category === 'Hambúrgueres') {
+      products = [
+        { id: '1', name: 'Burg Clássico', description: 'Pão brioche, duplo cheddar...', price: 20.9, image: '/images/clas1.png', category: 'tradicional' },
+        { id: '2', name: 'Chicken cheese', description: 'Pão brioche, duplo cheddar...', price: 20.9, image: '/images/chicken2.png', category: 'tradicional' },
+        { id: '3', name: 'Especial bacon', description: 'Pão brioche, duplo cheddar...', price: 20.9, image: '/images/especial_bacon2.png', category: 'tradicional' },
+        { id: '4', name: 'Especial salada', description: 'Pão brioche, salada 2x...', price: 20.9, image: '/images/especial_salada2.png', category: 'tradicional' },
+        { id: '5', name: 'TOURO ESTELAR', description: 'Pão brioche, maionese de bacon...', price: 29.9, image: '/images/touro_estelar.png', category: 'especial' },
+        { id: '6', name: 'COSMO BACON X2', description: 'Pão brioche, maionese bacon...', price: 32.9, image: '/images/cosmo_baconx2.png', category: 'especial' },
+        { id: '7', name: 'ASTRO NEBULITOS', description: 'Pão brioche, maionese bacon...', price: 31.9, image: '/images/astro_nebulitos.png', category: 'especial' },
+        { id: '8', name: 'ORBITA VERDE', description: 'Pão brioche, maionese verde...', price: 27.9, image: '/images/orbita_verde.png', category: 'especial' },
+        { id: '11', name: 'GALACTUS', description: 'Pão brioche, triple hambúrguer...', price: 49.9, image: '/images/galactus.png', category: 'supremos' },
+        { id: '12', name: 'DORMAMMU', description: 'Pão brioche, maionese costela...', price: 49.9, image: '/images/dormammu.png', category: 'supremos' }
+      ];
+    } 
+    else if (category === 'Bebidas') {
+      products = [
+        { id: '1', name: 'Coca-Cola', description: 'Refrigerante', price: 5.9, image: '/images/coca.png', category: 'Bebidas' },
+        // Adicione mais produtos para bebidas
+      ];
+    } else if (category === 'Porções') {
+      products = [
+        { id: '1', name: 'Batata Frita', description: 'Porção de batatas fritas', price: 10.9, image: '/images/batata.png', category: 'Porções' },
+        // Adicione mais produtos para porções
+      ];
+    }
+
+    setProducts(products);  // Atualiza os produtos da categoria selecionada
+  }, [category]);
 
   return (
     <section className="mb-20 px-2 sm:px-4 lg:px-6 bg-white">
@@ -153,9 +62,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           <div className="w-16 h-16 bg-orange-300 rounded-full shadow-xl" />
         </div>
 
-        {/* ///linhas pag - layout com imagem decorativa e cards */}
+        {/* Layout com imagem decorativa e cards */}
         <div className="flex flex-col-reverse lg:flex-row items-center lg:items-start gap-10 mt-12 px-4 sm:px-6 lg:px-8">
-          {/* Hambúrgueres */}
           <div className="grid w-full gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
             {products.map((product) => (
               <div
@@ -174,20 +82,6 @@ const ProductSection: React.FC<ProductSectionProps> = ({
               alt="Nível de Fome"
               className="w-full h-full object-cover"
             />
-          </div>
-        </div>
-
-        {/* ///linhas pag - bloco opcional com layout alternativo */}
-        <div className={""}>
-          <div className={""}>
-            {products.map((product) => (
-              <div
-                key={product.id}
-                className="bg-white border-4 border-gray-200 rounded-2xl p-4 shadow-lg transform hover:scale-105 transition-transform duration-300"
-              >
-                <HamburguerCard product={product} onAddToCart={onAddToCart} />
-              </div>
-            ))}
           </div>
         </div>
       </div>

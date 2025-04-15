@@ -1,114 +1,56 @@
 'use client';
 
-import { useState } from 'react';
+import Image from 'next/image';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
-import ProductSection from './components/ProductSection';
 import Footer from './components/Footer';
-import CategoryTabs from './components/CategoryTabs';
-import { Product } from './types/product';
-
-interface CartItem {
-  product: Product;
-  quantity: number;
-}
-
-const categoryMap: Record<string, string> = {
-  "Hambúrgueres": "tradicional",
-  "Bebidas": "bebidas",
-  "Porções": "porcoes",
-  "Massas": "massas",
-  "Sobremesas": "sobremesas",
-};
+import BottomNavigation from './components/BottomNavigation';
 
 export default function Home() {
-  const categories = ['Hambúrgueres', 'Bebidas', 'Porções', 'Massas', 'Sobremesas'];
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [cart, setCart] = useState<CartItem[]>([]);
-
-  const handleAddToCart = (product: Product, quantity: number) => {
-    setCart(prevCart => {
-      const existingItemIndex = prevCart.findIndex(item => item.product.id === product.id);
-      
-      if (existingItemIndex >= 0) {
-        const updatedCart = [...prevCart];
-        updatedCart[existingItemIndex].quantity += quantity;
-        return updatedCart;
-      } else {
-        return [...prevCart, { product, quantity }];
-      }
-    });
-
-    alert(`${quantity} ${product.name} adicionado ao carrinho!`);
-  };
-
   return (
-    <div className="min-h-screen">
-      <Header cartItemCount={cart.reduce((total, item) => total + item.quantity, 0)} />
-      
-      <main className="max-w-5xl mx-auto px-4 pt-44 pb-10">
+    <div className="min-h-screen flex flex-col">
+      <Header cartItemCount={0} />
+
+      <main className="max-w-5xl mx-auto px-4 pt-44 pb-24 flex-grow"> {/* Aqui adicionamos flex-grow */}
         <HeroSection />
 
-        <CategoryTabs
-          activeTab={selectedCategory}
-          onChange={(category) => setSelectedCategory(category)}
-        />
+        {/* Sobre a Hamburgueria */}
+        <section className="mt-10">
+          <h2 className="text-2xl font-bold mb-4">Quem Somos</h2>
+          <p className="text-gray-700 leading-relaxed">
+            Na NebsBurguer, servimos hambúrgueres artesanais preparados com os ingredientes mais frescos e muito carinho. Nossa missão é oferecer uma experiência saborosa, rápida e marcante para todos os nossos clientes.
+          </p>
+        </section>
 
-        {/* Renderizar produtos de acordo com a categoria selecionada */}
-        {selectedCategory === 'Hambúrgueres' && (
-          <>
-            <ProductSection 
-              title="Hambúrgueres Tradicionais" 
-              category="tradicional"
-              onAddToCart={handleAddToCart} 
-            />
-            <ProductSection 
-              title="Hambúrgueres Especiais" 
-              category="especial"
-              onAddToCart={handleAddToCart} 
-            />
-            <ProductSection 
-              title="Hambúrgueres Supremos" 
-              category="supremos"
-              onAddToCart={handleAddToCart} 
-            />
-          </>
-        )}
-
-        {selectedCategory === 'Bebidas' && (
-          <ProductSection 
-            title="Bebidas Geladas" 
-            category="bebidas"
-            onAddToCart={handleAddToCart} 
-          />
-        )}
-
-        {selectedCategory === 'Porções' && (
-          <ProductSection 
-            title="Porções Deliciosas" 
-            category="porcoes"
-            onAddToCart={handleAddToCart} 
-          />
-        )}
-
-        {selectedCategory === 'Massas' && (
-          <ProductSection 
-            title="Massas Artesanais" 
-            category="massas"
-            onAddToCart={handleAddToCart} 
-          />
-        )}
-
-        {selectedCategory === 'Sobremesas' && (
-          <ProductSection 
-            title="Sobremesas Irresistíveis" 
-            category="sobremesas"
-            onAddToCart={handleAddToCart} 
-          />
-        )}
+        {/* Promoções */}
+        <section className="mt-10">
+          <h2 className="text-2xl font-bold mb-4">Promoções da Semana</h2>
+          
+          <div className="bg-yellow-100 text-yellow-800 rounded-lg p-4 shadow-md flex items-center gap-4">
+            <div className="flex-shrink-0">
+              <Image
+                src="/images/batata.png"
+                alt="Promoção Combo Duplo"
+                width={100}
+                height={100}
+                className="rounded-lg"
+              />
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-lg">🍔 Combo Duplo</h3>
+              <p className="text-sm">Hambúrguer + Fritas + Refrigerante por apenas <strong>R$29,90</strong>!</p>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />
+
+      {/* Usando "sticky" para que o BottomNavigation se mova para o rodapé */}
+      <div className="relative">
+        <BottomNavigation />
+      </div>
     </div>
   );
 }

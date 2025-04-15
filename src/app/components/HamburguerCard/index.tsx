@@ -49,19 +49,23 @@ export default function HamburguerCard({ product, onAddToCart }: Props) {
         <div className="flex items-center gap-2 mt-2 flex-wrap">
           <button
             onClick={decrease}
-            className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full"
+            aria-label="Diminuir quantidade"
+            disabled={quantity <= 1}
+            className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full disabled:opacity-50"
           >
             <Minus size={16} />
           </button>
           <span className="text-lg font-semibold">{quantity}</span>
           <button
             onClick={increase}
+            aria-label="Aumentar quantidade"
             className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full"
           >
             <Plus size={16} />
           </button>
           <button
             onClick={handleAddToCart}
+            aria-label="Adicionar ao carrinho"
             className="ml-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl transition flex items-center gap-2"
           >
             <ShoppingCart size={16} /> Adicionar
@@ -71,3 +75,4 @@ export default function HamburguerCard({ product, onAddToCart }: Props) {
     </div>
   );
 }
+// colocar os cards um do lado do outro apenas com os nomes e a foto do hamburguer 
