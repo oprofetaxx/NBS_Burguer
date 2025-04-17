@@ -6,4 +6,6 @@ export interface Product {
     image?: string;
     category: string;
     tag?: string;
+    buyLink?: string;
+    purchaseLink?: string;
   }

@@ -1,7 +1,8 @@
 import { ShoppingCart, Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
-import { Product } from '../types';
+import { Product } from '../../types/product';
+import Link from 'next/link';
 
 interface Props {
   product: Product;
@@ -20,59 +21,58 @@ export default function HamburguerCard({ product, onAddToCart }: Props) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-4 flex flex-row items-center gap-6 text-left">
-      {/* Imagem do hambúrguer (esquerda com espaço) */}
-      <div className="w-36 h-36 flex-shrink-0 ml-2">
-        <Image
-          src={product.image}
-          alt={product.name}
-          width={144}
-          height={144}
-          className="object-contain w-full h-full"
-        />
-      </div>
-
-      {/* Conteúdo à direita mais centralizado */}
-      <div className="flex-1 flex flex-col justify-center items-start gap-2 px-2">
-        {/* Badge de categoria */}
-        {product.tag && (
-          <span className="text-xs px-3 py-1 bg-yellow-500 text-white rounded-full uppercase font-semibold">
-            {product.tag}
-          </span>
-        )}
-
-        <h3 className="text-lg font-semibold">{product.name}</h3>
-        <p className="text-sm text-gray-600">{product.description}</p>
-        <p className="text-lg font-bold mt-1">R$ {product.price.toFixed(2)}</p>
-
-        {/* Controles de quantidade e botão */}
-        <div className="flex items-center gap-2 mt-2 flex-wrap">
-          <button
-            onClick={decrease}
-            aria-label="Diminuir quantidade"
-            disabled={quantity <= 1}
-            className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full disabled:opacity-50"
-          >
-            <Minus size={16} />
-          </button>
-          <span className="text-lg font-semibold">{quantity}</span>
-          <button
-            onClick={increase}
-            aria-label="Aumentar quantidade"
-            className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full"
-          >
-            <Plus size={16} />
-          </button>
-          <button
-            onClick={handleAddToCart}
-            aria-label="Adicionar ao carrinho"
-            className="ml-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl transition flex items-center gap-2"
-          >
-            <ShoppingCart size={16} /> Adicionar
-          </button>
+    <div className="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center gap-4 transition-transform hover:scale-105 relative">
+      {/* Link para a página do hambúrguer */}
+      <Link href={`/hamburguer/${product.id}`} className="block text-center w-full">
+        <div className="flex justify-center mb-4">
+          <Image
+            src={product.image}
+            alt={product.name}
+            width={160}
+            height={160}
+            className="object-contain"
+          />
         </div>
+
+        {/* Nome, descrição e preço */}
+        <div className="text-center">
+          {product.tag && (
+            <span className="text-xs px-3 py-1 bg-yellow-500 text-white rounded-full uppercase font-semibold absolute top-3 left-3 z-10">
+              {product.tag}
+            </span>
+          )}
+          <h3 className="text-xl font-semibold text-orange-600 mt-2">{product.name}</h3>
+          {product.description && <p className="text-sm text-gray-600 mt-1">{product.description}</p>}
+          <p className="text-lg font-bold text-orange-700 mt-2">R$ {product.price.toFixed(2)}</p>
+        </div>
+      </Link>
+
+      {/* Quantidade e botão de adicionar */}
+      <div className="flex items-center justify-center gap-3 mt-4">
+        <button
+          onClick={decrease}
+          aria-label="Diminuir quantidade"
+          disabled={quantity <= 1}
+          className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full disabled:opacity-50"
+        >
+          <Minus size={16} />
+        </button>
+        <span className="text-lg font-semibold">{quantity}</span>
+        <button
+          onClick={increase}
+          aria-label="Aumentar quantidade"
+          className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full"
+        >
+          <Plus size={16} />
+        </button>
+        <button
+          onClick={handleAddToCart}
+          aria-label="Adicionar ao carrinho"
+          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-xl transition duration-300 flex items-center gap-2 mt-4"
+        >
+          <ShoppingCart size={16} /> Adicionar
+        </button>
       </div>
     </div>
   );
 }
-// colocar os cards um do lado do outro apenas com os nomes e a foto do hamburguer 

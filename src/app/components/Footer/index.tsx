@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export const Footer: React.FC = () => {
   return (
-    <footer id="footer" className="bg-gray-100 py-6">
+    <footer id="footer" className="bg-gray-100 py-6 pt-[100px]"> {/* Adicionando padding-top */}
       <div className="container mx-auto px-4 max-w-screen-xl">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center mb-4 md:mb-0">
@@ -31,5 +31,4 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
-
 export default Footer;

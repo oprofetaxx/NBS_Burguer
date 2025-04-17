@@ -1,8 +1,9 @@
-"use client"
+/*"use client";
 
 import BottomNavigation from '@/app/components/BottomNavigation'; // Importe o BottomNavigation
 import ProductSection from '@/app/components/ProductSection'; // Importe o ProductSection
 import { useState } from 'react';
+import { Product } from '@/app/types/product'; // Certifique-se de que o tipo Product está corretamente importado
 
 export default function CardapioPage() {
   const [selectedCategory, setSelectedCategory] = useState('Hambúrgueres'); // Estado para a categoria selecionada
@@ -18,7 +19,7 @@ export default function CardapioPage() {
         <h1 className="text-3xl font-bold text-orange-600">Cardápio</h1>
         <p className="mt-4 text-gray-700">Aqui vai o cardápio completo.</p>
 
-        {/* Aqui você vai passar a categoria selecionada e a função de adicionar ao carrinho */}
+         Aqui você vai passar a categoria selecionada e a função de adicionar ao carrinho 
         <section className="mt-10">
           <ProductSection 
             title="Produtos" 
@@ -28,10 +29,10 @@ export default function CardapioPage() {
         </section>
       </div>
 
-      {/* Adicione o BottomNavigation fixado no rodapé */}
-      <div className="fixed top-[93%] left-1/2 transform -translate-x-1/2 -translate-y-1/3 z-50 w-full">
-        <BottomNavigation />
-      </div>
+      {/* Adicionando o BottomNavigation fixado no rodapé *
+      
+      <BottomNavigation />
     </div>
   );
 }
+*/

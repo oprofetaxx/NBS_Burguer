@@ -15,14 +15,15 @@ const BottomNavigation: React.FC = () => {
     { name: 'Cupons', href: '/cupons', icon: Ticket },
     { name: 'Cardápio', href: '/cardapio', icon: Menu },
     { name: 'Lojas', href: '/lojas', icon: Store },
-    { name: 'Mais', href: '/menu', icon: AlignJustify }
+    { name: 'Carrinho', href: '/carrinho', icon: AlignJustify }
   ];
 
   useEffect(() => {
     const footer = document.getElementById('footer');
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsSticky(entry.isIntersecting);
+        // Verifica quando o footer aparece na tela e define a visibilidade
+        setIsSticky(!entry.isIntersecting);
       },
       { rootMargin: '0px', threshold: 1.0 }
     );
@@ -37,8 +38,8 @@ const BottomNavigation: React.FC = () => {
   return (
     <nav
       className={clsx(
-        'fixed bottom-0 left-0 right-0 w-full bg-[#F54601] border-t border-[#460800] flex justify-around items-center h-20 z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.2)] text-white',
-        isSticky ? 'sticky' : 'absolute bottom-0' // Controlando o sticky
+        'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-[#F54601] border border-[#460800] flex justify-around items-center w-full h-[60px] rounded-2xl z-50 shadow-lg text-white',
+        isSticky ? '' : 'translate-y-full' // Se não for sticky, o menu se moverá para fora da tela
       )}
     >
       {navItems.map((item) => {

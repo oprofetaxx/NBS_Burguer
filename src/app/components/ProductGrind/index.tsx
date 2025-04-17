@@ -1,7 +1,7 @@
 // ProductGrid: Um layout em grade para exibir os produtos de maneira organizada, similar à interface do Burger King.
 import React from 'react';
 import ProductCard from '../ProductCard';
-import { Product } from '../../types/product';
+import { Product } from '../../../types/product';
 
 interface ProductGridProps {
   category: string;

@@ -29,14 +29,9 @@ const Header = ({ cartItemCount = 0 }: HeaderProps) => {
         </div>
 
         {/* Info adicional (antes no Footer) */}
-        <div className="hidden md:flex items-center gap-2 text-right">
-          <Image src="/logo_2.png" alt="Logo secundário" width={32} height={32} />
-          <div>
-            <p className="text-white text-sm font-bold leading-none">NEBS BURGUER</p>
-            <p className="text-white text-xs leading-none">Siqueira Campos - PR</p>
-          </div>
+        
         </div>
-      </div>
+     
 
       {/* Adicionando o BottomNavigation */}
       
